@@ -20,21 +20,18 @@ It is built as **three cooperating agents** rather than one monolithic chatbot, 
 | **Emergency Agent** | Screens for distress signals, confirms severity, escalates to caregiver | Needs a fast cheap filter + a slower accurate confirmation step |
 
 ## Architecture
-              ┌─────────────────────┐
-    User input   │   Orchestrator Agent │
-   ─────────────▶│  (routes & prioritizes) │
-                 └──────────┬──────────┘
-                            │
-          ┌─────────────────┼─────────────────┐
-          ▼                 ▼                 ▼
- ┌────────────────┐ ┌────────────────┐ ┌─────────────────┐
- │ Emergency Agent │ │ Reminder Agent │ │  General Chat   │
- │ (checked FIRST) │ │ (add/list)     │ │  (Gemini LLM)   │
- └────────┬────────┘ └────────────────┘ └─────────────────┘
-          │
-          ▼
- Simulated caregiver alert
- (SMS/call integration point for future work)
+    ## Architecture
+
+```mermaid
+flowchart TD
+    A[User Input] --> B[Orchestrator Agent]
+    B -->|1. Always checked first| C[Emergency Agent]
+    C -->|Screens for distress, confirms severity| D[Simulated Caregiver Alert]
+    B -->|2. If no emergency| E[Reminder Agent]
+    B -->|3. Fallback| F[General Chat via Gemini LLM]
+    E -->|add / list / mark done| G[(Local JSON Store)]
+```
+
 **Safety-first routing:** the Orchestrator always runs the Emergency Agent's screen on every message before deciding anything else. **Two-stage emergency detection:** a cheap keyword screen gates a slower, more accurate LLM confirmation call.
 
 ## The Build

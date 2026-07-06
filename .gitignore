@@ -1,4 +1,4 @@
 .env
-   __pycache__/
-   *.pyc
-   data/reminders.json
+__pycache__/
+*.pyc
+data/reminders.json
