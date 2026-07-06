@@ -33,8 +33,8 @@ It is built as **three cooperating agents** rather than one monolithic chatbot, 
  └────────┬────────┘ └────────────────┘ └─────────────────┘
           │
           ▼
- Simulated caregiver alert
- (SMS/call integration point for future work)
+Simulated caregiver alert
+(SMS/call integration point for future work)
  
 **Safety-first routing:** the Orchestrator always runs the Emergency Agent's screen on every message before deciding anything else. **Two-stage emergency detection:** a cheap keyword screen gates a slower, more accurate LLM confirmation call.
 
